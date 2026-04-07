@@ -1,26 +1,144 @@
-#  Как работать с репозиторием финального задания
+# Kittygram
+## Описание проекта
 
-## Что нужно сделать
+Kittygram — социальная сеть для обмена фотографиями любимых питомцев. Это полностью рабочий проект, который состоит из бэкенд-приложения на Django и фронтенд-приложения на React. Пользователи могут создавать профили, добавлять фотографии своих питомцев, указывать их возраст, цвет и достижения.
 
-Настроить запуск проекта Kittygram в контейнерах и CI/CD с помощью GitHub Actions
 
-## Как проверить работу с помощью автотестов
+Проект развёрнут на сервере и доступен по адресу:
 
-В корне репозитория создайте файл tests.yml со следующим содержимым:
-```yaml
-repo_owner: ваш_логин_на_гитхабе
-kittygram_domain: полная ссылка (https://доменное_имя) на ваш проект Kittygram
-taski_domain: полная ссылка (https://доменное_имя) на ваш проект Taski
-dockerhub_username: ваш_логин_на_докерхабе
+https://kittygram.servehttp.com
+
+---
+
+## Использованные технологии
+
+* Python
+* Django
+* Django REST Framework
+* Djoser
+* PostgreSQL
+* Docker
+* Docker Compose
+* Nginx
+* React
+
+## Архитектура
+
+Проект состоит из нескольких контейнеров:
+
+* backend — Django приложение
+* frontend — React интерфейс
+* db — PostgreSQL база данных
+* gateway — Nginx
+
+---
+
+# Установка и запуск проекта
+
+## Клонировать репозиторий
+
+```bash
+git clone https://github.com/USERNAME/kittygram.git
+cd kittygram
 ```
 
-Скопируйте содержимое файла `.github/workflows/main.yml` в файл `kittygram_workflow.yml` в корневой директории проекта.
+---
 
-Для локального запуска тестов создайте виртуальное окружение, установите в него зависимости из backend/requirements.txt и запустите в корневой директории проекта `pytest`.
+## Создать файл переменных окружения
 
-## Чек-лист для проверки перед отправкой задания
+Создайте файл `.env` на основе шаблона:
 
-- Проект Taski доступен по доменному имени, указанному в `tests.yml`.
-- Проект Kittygram доступен по доменному имени, указанному в `tests.yml`.
-- Пуш в ветку main запускает тестирование и деплой Kittygram, а после успешного деплоя вам приходит сообщение в телеграм.
-- В корне проекта есть файл `kittygram_workflow.yml`.
+```bash
+cp .env.example .env
+```
+
+## Запуск проекта через Docker
+
+```bash
+docker compose -f docker-compose.production.yml up -d
+```
+
+После запуска выполните миграции:
+
+```bash
+docker compose exec backend python manage.py migrate
+```
+
+Соберите статические файлы:
+
+```bash
+docker compose exec backend python manage.py collectstatic --noinput
+```
+
+---
+
+## Проект будет доступен по адресу
+
+```
+http://localhost:9000
+```
+
+---
+
+# Примеры API запросов
+
+## Получить список котов
+
+GET
+
+```
+/api/cats/
+```
+
+Ответ:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Барсик",
+    "color": "orange",
+    "birth_year": 2018,
+    "achievements": [
+      "Лучший кот района"
+    ]
+  }
+]
+```
+
+---
+
+## Добавить кота
+
+POST
+
+```
+/api/cats/
+```
+
+Тело запроса:
+
+```json
+{
+  "name": "Мурзик",
+  "color": "white",
+  "birth_year": 2020,
+  "achievements": ["Самый ласковый в доме"]
+}
+```
+
+---
+
+## Получить токен пользователя
+
+POST
+
+```
+/api/auth/token/login/
+```
+
+---
+
+# Автор
+
+-   **Анастасия Горштейн** — [GitHub](https://github.com/NastyaGorshtein)
