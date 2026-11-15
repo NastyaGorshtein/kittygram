@@ -6,7 +6,8 @@ Kittygram — социальная сеть для обмена фотограф
 
 Проект развёрнут на сервере и доступен по адресу:
 
-https://kittygram.servehttp.com
+https://kittygram.servehttp.com 
+p.s.: уже не доступен
 
 ---
 
